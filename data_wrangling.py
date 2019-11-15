@@ -74,12 +74,14 @@ t2 = time.time()
 assert train.shape[0] == 18257718
 train.to_pickle('train_clean.pkl') #459 seconds
 t3 = time.time()
+print(t3-t2)
 train.to_pickle('train_clean.pkl.gz')
 t4 = time.time()
+print(t4-t3)
 train.to_csv('train_clean.csv', index=False)
 t5 = time.time()
+print(t5-t4)
 print('train saving done')
-assert 1 > 2
 
 #%%
 train = None
@@ -101,6 +103,13 @@ add_datepart(test, 'timestamp', drop=False, time=True)
 print('test wrangling done')
 t5 = time.time()
 assert test.shape[0] == rows
+test.to_pickle('test_clean.pkl') #459 seconds
+t3 = time.time()
+print(t3-t2)
 test.to_pickle('test_clean.pkl.gz')
-t6 = time.time()
+t4 = time.time()
+print(t4-t3)
+test.to_csv('test_clean.csv', index=False)
+t5 = time.time()
+print(t5-t4)
 print('test saving done')
