@@ -31,9 +31,9 @@ ashrae_dtypes = {'site_id': np.uint8,
                'air_temperature': np.float32,
                'cloud_coverage': np.float32,
                'dew_temperature': np.float32,
-               'precip_depth_1_hr': np.float32, #np.int16 < 0
+               'precip_depth_1_hr': np.float32,
                'sea_level_pressure': np.float32,
-               'wind_direction': np.float32, # np.uint16
+               'wind_direction': np.float32,
                'wind_speed': np.float32, 
                }
 bldg = pd.read_csv(os.path.join(wdir,'building_metadata.csv'), dtype=ashrae_dtypes)
@@ -100,10 +100,11 @@ test = test.merge(weather_test, how='left', on=['building_id','timestamp'])
 test.sort_values(['building_id','timestamp'], inplace=True)
 test.fillna(method='ffill', inplace=True)
 add_datepart(test, 'timestamp', drop=False, time=True)
+test.drop(['timestamp','timestampYear'], axis=1, inplace=True)
 print('test wrangling done')
-t5 = time.time()
+t2 = time.time()
 assert test.shape[0] == rows
-test.to_pickle('test_clean.pkl') #459 seconds
+test.to_pickle('test_clean.pkl')
 t3 = time.time()
 print(t3-t2)
 test.to_pickle('test_clean.pkl.gz')
